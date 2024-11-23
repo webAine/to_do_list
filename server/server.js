@@ -68,15 +68,13 @@ app.post("/tasks", async (req, res) => {
 app.put("/tasks/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { isCompleted, deadline } = req.body; // Добавили deadline
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,
-      { isCompleted, deadline },
-      { new: true }
-    );
-    res.json(updatedTask);
+    const updateData = req.body; // Данные из запроса
+    const updatedTask = await Task.findByIdAndUpdate(id, updateData, {
+      new: true, // Возвращать обновлённый объект
+    });
+    res.json(updatedTask); // Возвращаем обновлённую задачу
   } catch (err) {
-    console.error(err);
+    console.error("Error updating task:", err);
     res.status(500).send("Error updating task");
   }
 });

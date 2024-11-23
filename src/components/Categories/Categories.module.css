@@ -1,0 +1,11 @@
+.categoriesWrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.categoriesWrapper button {
+  padding: 5px 10px;
+  color: #000;
+  border-radius: 10px;
+  background-color: antiquewhite;
+}

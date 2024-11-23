@@ -20,8 +20,9 @@ const Categories = ({ tasks, selectedCategory, setSelectedCategory }) => {
             key={category}
             onClick={() => setSelectedCategory(category)}
             style={{
-              backgroundColor:
-                selectedCategory === category ? "lightgray" : "white",
+              scale:
+                selectedCategory === category ? "1.1" : "1",
+                background: selectedCategory === category && "red"
             }}
           >
             {category === "all"
