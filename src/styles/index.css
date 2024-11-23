@@ -33,3 +33,11 @@ button {
 html {
   scroll-behavior: smooth;
 }
+body {
+  background: #2c2c2c;
+}
+.container {
+  max-width: 1390px;
+  padding: 0 10px;
+  margin: 0 auto;
+}

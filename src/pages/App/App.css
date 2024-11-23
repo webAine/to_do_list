@@ -1,0 +1,6 @@
+.toDoList {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

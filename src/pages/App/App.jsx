@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import "./App.css";
 import AddTaskForm from "../../components/AddTaskForm/AddTaskForm";
 import TaskList from "../../components/TaskList/TaskList";
+import Categories from "../../components/Categories/Categories";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -43,15 +47,29 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <AddTaskForm fetchTasks={fetchTasks} />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <TaskList tasks={tasks} fetchTasks={fetchTasks} />
-      )}
-    </div>
+    <>
+      <Header />
+      <div className="container">
+        <div className="toDoList">
+          <Categories
+            tasks={tasks}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+          <AddTaskForm fetchTasks={fetchTasks} />
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <TaskList
+              tasks={tasks}
+              fetchTasks={fetchTasks}
+              selectedCategory={selectedCategory}
+            />
+          )}
+        </div>
+      </div>
+      <Footer />
+    </>
   );
 };
 

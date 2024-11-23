@@ -1,0 +1,19 @@
+.taskForm {
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.taskFormWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.taskFormWrapper input {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+}
+.taskFormWrapper button {
+  padding: 5px;
+  background: green;
+}

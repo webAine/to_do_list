@@ -1,48 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import TaskItem from './../TaskItem/TaskItem';
+import TaskItem from "./../TaskItem/TaskItem";
+import styles from "./TaskList.module.css";
 
-const TaskList = ({ tasks, fetchTasks, loading }) => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [categories, setCategories] = useState(['all']);
-
-  // Динамическое создание категорий после получения задач
-  useEffect(() => {
-    if (tasks.length > 0) {
-      const uniqueCategories = [
-        ...new Set(tasks.map(task => task.category)),
-      ];
-      setCategories(['all', ...uniqueCategories]);
-    }
-  }, [tasks]); // Этот эффект сработает каждый раз, когда tasks обновятся
-
+const TaskList = ({ tasks, fetchTasks, loading, selectedCategory }) => {
   // Фильтрация задач по выбранной категории
-  const filteredTasks = tasks.filter(task => {
-    if (selectedCategory === 'all') return true;
-    return task.category === selectedCategory;
-  });
+  const filteredTasks = tasks
+    .filter((task) => {
+      if (selectedCategory === "all") return !task.isCompleted;
+      if (selectedCategory === "completed") return task.isCompleted;
+      return task.category === selectedCategory && !task.isCompleted;
+    })
+    .sort((a, b) => {
+      if (!a.deadline) return 1; // Задачи без дедлайна идут последними
+      if (!b.deadline) return -1;
+      return new Date(a.deadline) - new Date(b.deadline);
+    });
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
+    <div className={styles.tasks}>
       <h2>Tasks</h2>
-      <div>
-        {categories.map(category => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            style={{
-              backgroundColor: selectedCategory === category ? 'lightgray' : 'white',
-            }}
-          >
-            {category === 'all' ? 'Все' : category}
-          </button>
-        ))}
-      </div>
-      <ul>
-        {filteredTasks.map(task => (
+      <ul className={styles.tasksList}>
+        {filteredTasks.map((task) => (
           <TaskItem key={task._id} task={task} fetchTasks={fetchTasks} />
         ))}
       </ul>

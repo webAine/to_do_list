@@ -1,0 +1,19 @@
+.tasksItem {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.tasksItemCategory {
+  padding: 10px 5px;
+  text-align: center;
+  background: green;
+}
+.tasksItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 20px;
+}

@@ -37,8 +37,8 @@ app.get("/tasks", async (req, res) => {
   try {
     const { category } = req.query; // Получаем параметр категории из запроса
     let tasks;
-    
-    if (category && category !== 'all') {
+
+    if (category && category !== "all") {
       tasks = await Task.find({ category }); // Если категория передана, фильтруем по ней
     } else {
       tasks = await Task.find(); // Если нет категории, возвращаем все задачи
@@ -51,13 +51,12 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-
 // Добавление новой задачи
 app.post("/tasks", async (req, res) => {
   try {
-    const { text, category } = req.body;
-    const newTask = new Task({ text, category });
-    await newTask.save(); // Сохраняем задачу в базу
+    const { text, category, deadline } = req.body; // Добавили deadline
+    const newTask = new Task({ text, category, deadline });
+    await newTask.save();
     res.status(201).json(newTask);
   } catch (err) {
     console.error(err);
@@ -69,10 +68,10 @@ app.post("/tasks", async (req, res) => {
 app.put("/tasks/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { isCompleted } = req.body;
+    const { isCompleted, deadline } = req.body; // Добавили deadline
     const updatedTask = await Task.findByIdAndUpdate(
       id,
-      { isCompleted },
+      { isCompleted, deadline },
       { new: true }
     );
     res.json(updatedTask);
