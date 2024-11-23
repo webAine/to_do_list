@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import styles from "./TaskItem.module.css";
+import completeIcon from "./../../assets/icons/complete.svg";
+import deleteIcon from "./../../assets/icons/delete.svg";
+import editIcon from "./../../assets/icons/edit.svg";
+import colorIcon from "./../../assets/icons/color.svg";
 
 const TaskItem = ({ task, fetchTasks }) => {
   const [color, setColor] = useState(task.color || "#eee"); // Текущий цвет задачи
   const [isEditing, setIsEditing] = useState(false); // Статус редактирования
   const [editedText, setEditedText] = useState(task.text); // Текст для редактирования
+  const [isColorDropdownVisible, setColorDropdownVisible] = useState(false);
 
   const handleComplete = async () => {
     try {
@@ -104,25 +109,47 @@ const TaskItem = ({ task, fetchTasks }) => {
         {task.deadline && (
           <span>Deadline: {new Date(task.deadline).toLocaleDateString()}</span>
         )}
-        {!task.isCompleted && (
-          <button onClick={handleComplete}>Mark as Completed</button>
-        )}
-        <button onClick={handleDelete}>Delete</button>
-        <label>
+
+        {/* <label>
           Change Color:
           <input
             type="color"
             value={color}
             onChange={(e) => handleColorChange(e.target.value)}
           />
-        </label>
+        </label> */}
       </div>
-
-      {!isEditing ? (
-        <button onClick={handleEditToggle}>Edit</button>
-      ) : (
-        <button onClick={handleSaveText}>Save</button>
-      )}
+      <div className={styles.buttons}>
+        <label>
+          <img src={colorIcon} alt="color" />
+          <select
+            value={color}
+            onChange={(e) => handleColorChange(e.target.value)}
+          >
+            <option className={styles.red} value="#ff0000"></option>
+            <option className={styles.green} value="#00ff00"></option>
+            <option className={styles.blue} value="#0000ff"></option>
+            <option className={styles.yellow} value="#ffff00"></option>
+          </select>
+        </label>
+        {!task.isCompleted && (
+          <button onClick={handleComplete}>
+            <img src={completeIcon} alt="complete" />
+          </button>
+        )}
+        {!isEditing ? (
+          <button onClick={handleEditToggle}>
+            <img src={editIcon} alt="edit" />
+          </button>
+        ) : (
+          <button onClick={handleSaveText}>
+            <img src={editIcon} alt="edit" />
+          </button>
+        )}
+        <button onClick={handleDelete}>
+          <img src={deleteIcon} alt="delete" />
+        </button>
+      </div>
     </li>
   );
 };
